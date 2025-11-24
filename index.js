@@ -1,36 +1,41 @@
-import express from "express"
+import express from "express";
 
-const app = express(); 
+const app = express();
 
 app.use(express.static("public"))
 
-app.use((req,res,next) => {
-    console.log(`Datos recibidos: ${req.method} ${req.url}`);
-    next();
-})
+app.use((req, res, next) => {
+  console.log(`Datos recibidos: ${req.method} ${req.url}`);
+  next();
+});
 
 app.get('/',(req,res) => {
-    res.send("hola")  
-})
-
+    res.send("hola")
+})    
 app.get('/users')
 
 app.get('/about',(req,res) => {
     res.send("pagina about")
 })
 
-app.get('/sumar', (req,res) => {  //con req obtenemos datos y con res damos la respuesta
-    const numero1 = +req.query.num1 //va a recibir por query un dato
-    const numero2 = +req.query.num2
-    const result = numero1 + numero2 //localhost:3000/sumar?num1=5&num2=3 --> 8
-    res.send({resultado:result})
+app.get('/sumar',(req,res) => {
+    // http://loca lhost:3000/sumar?num1=5&num2=9
+
+    // const num1 =Number(req.query.numero1) // "5" + "9" -> 5 + 9
+    // const num2 = +req.query.numero2
+    res.send(`el resultado es ${+req.query.numero1 + +req.query.numero2}`)
+    // const numero1 = +req.query.num1
+    // const numero2 = +req.query.num2
+    // const result = numero1 + numero2
+    // res.send({resultado:result})
+
 })
 
-app.get('/add/:num1/:num2', (req,res) => {
-    const numero1 = +req.params.num1 //params pra mandarlo por parametro
-    const numero2 = req.params.num2
-    const result = numero1 + numero2
-    res.send(`resultado: ${result}`)
+app.get("/add/:num1/:num2",(req,res) => {
+  const numero1 = +req.params.num1
+  const numero2 = +req.params.num2
+  const result = numero1+numero2
+  res.send(`resultado : ${result}`)
 })
 
 const PORT = 3000;
